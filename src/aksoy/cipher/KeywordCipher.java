@@ -1,6 +1,7 @@
 package aksoy.cipher;
 
 public class KeywordCipher extends MonoAlphabeticCipher {
+
 	public KeywordCipher(String keyword) throws CipherException {
 		this.setKeyword(keyword);
 	}

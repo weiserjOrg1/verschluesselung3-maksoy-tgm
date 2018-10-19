@@ -9,9 +9,6 @@ package aksoy.cipher;
  *
  */
 public class ShiftCipher extends MonoAlphabeticCipher {
-	public ShiftCipher() {
-		super();
-	}
 
 	public ShiftCipher(int value) throws CipherException {
 		this.setShiftValue(value);

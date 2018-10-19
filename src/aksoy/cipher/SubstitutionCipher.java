@@ -8,9 +8,6 @@ package aksoy.cipher;
  * @version 10-10-2018
  */
 public class SubstitutionCipher extends MonoAlphabeticCipher {
-	public SubstitutionCipher() {
-		super();
-	}
 
 	public SubstitutionCipher(String secretAlphabet) throws CipherException {
 		this.setSecretAlphabet(secretAlphabet);

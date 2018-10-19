@@ -11,49 +11,50 @@ import javax.swing.JOptionPane;
 public class EncModel {
 	public static final int MODE_SUBST = 0;
 	public static final int MODE_SHIFT = 1;
+	public static final int MODE_KWORD = 2;
 
 	private int selectedMethod;
-	private SubstitutionCipher subst;
-	private ShiftCipher shift;
+	private MonoAlphabeticCipher cipher;
 
 	public EncModel() {
 		this.selectedMethod = MODE_SUBST;
-		this.subst = new SubstitutionCipher();
-		this.shift = new ShiftCipher();
+		this.cipher = new MonoAlphabeticCipher();
 	}
 
 	public void change(String input) {
 		try {
-			if (this.selectedMethod == MODE_SUBST) {
-				this.subst.setSecretAlphabet(input);
-				JOptionPane.showMessageDialog(null, "Change successful!");
-			} else {
-				try {
-					int inputInt = Integer.parseInt(input);
-					this.shift.setShiftValue(inputInt);
-					JOptionPane.showMessageDialog(null, "Change successful!");
-				} catch (NumberFormatException e) {
-					JOptionPane.showMessageDialog(null, "Error: Input is not a number.", "Error",
-							JOptionPane.ERROR_MESSAGE);
-				}
+			switch (this.selectedMethod) {
+			case MODE_SUBST:
+				this.cipher = new SubstitutionCipher(input);
+				break;
+			case MODE_SHIFT:
+				int inputInt = Integer.parseInt(input);
+				this.cipher = new ShiftCipher(inputInt);
+				break;
+			case MODE_KWORD:
+				this.cipher = new KeywordCipher(input);
+				break;
 			}
+			JOptionPane.showMessageDialog(null, "Change successful!");
 		} catch (CipherException c) {
 			JOptionPane.showMessageDialog(null, c.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
+		} catch (NumberFormatException e) {
+			JOptionPane.showMessageDialog(null, "Exception: Input is not a number.", "Error",
+					JOptionPane.ERROR_MESSAGE);
 		}
 	}
 
 	public void reset() {
-		this.subst = new SubstitutionCipher();
-		this.shift = new ShiftCipher();
+		this.cipher = new MonoAlphabeticCipher();
 		JOptionPane.showMessageDialog(null, "Reset successful!");
 	}
 
 	public String encrypt(String input) {
-		return (this.selectedMethod == MODE_SUBST ? this.subst.encrypt(input) : this.shift.encrypt(input));
+		return this.cipher.encrypt(input);
 	}
 
 	public String decrypt(String output) {
-		return (this.selectedMethod == MODE_SUBST ? this.subst.decrypt(output) : this.shift.decrypt(output));
+		return this.cipher.decrypt(output);
 	}
 
 	public int getMode() {
@@ -61,6 +62,7 @@ public class EncModel {
 	}
 
 	public void setMode(int mode) {
+		this.cipher = new MonoAlphabeticCipher();
 		this.selectedMethod = mode;
 	}
 }
