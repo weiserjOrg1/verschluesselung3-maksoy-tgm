@@ -22,11 +22,7 @@ public class EncController implements ActionListener, FocusListener {
 	 */
 	public void actionPerformed(ActionEvent e) {
 		if (this.view.isApplyChange(e.getSource())) {
-			if (this.view.isSubstSelected()) {
-				this.model.change(this.view.getSubstInp());
-			} else {
-				this.model.change(this.view.getShiftInp());
-			}
+			this.model.change(this.view.getChangeInp());
 		} else if (this.view.isReset(e.getSource())) {
 			this.model.reset();
 		} else if (this.view.isEncrypt(e.getSource())) {
@@ -37,6 +33,8 @@ public class EncController implements ActionListener, FocusListener {
 			this.view.setChangeLayout(EncModel.MODE_SUBST);
 		} else if (this.view.isShift(e.getSource())) {
 			this.view.setChangeLayout(EncModel.MODE_SHIFT);
+		} else if (this.view.isKeyword(e.getSource())) {
+			this.view.setChangeLayout(EncModel.MODE_KWORD);
 		}
 	}
 
@@ -45,6 +43,8 @@ public class EncController implements ActionListener, FocusListener {
 			this.view.setChangeLayout(EncModel.MODE_SUBST);
 		} else if (this.view.isShift(e.getSource())) {
 			this.view.setChangeLayout(EncModel.MODE_SHIFT);
+		} else if (this.view.isKeyword(e.getSource())) {
+			this.view.setChangeLayout(EncModel.MODE_KWORD);
 		}
 	}
 

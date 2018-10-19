@@ -3,7 +3,7 @@ package aksoy.cipher;
 /**
  * The class test creates an instance of EncController.
  * 
- * @author meliH
+ * @author Melih Aksoy
  * @version 18-10-2018
  */
 public class test {

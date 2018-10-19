@@ -41,6 +41,8 @@ public class EncModel {
 		} catch (NumberFormatException e) {
 			JOptionPane.showMessageDialog(null, "Exception: Input is not a number.", "Error",
 					JOptionPane.ERROR_MESSAGE);
+		} catch (NoKeywordException d) {
+			JOptionPane.showMessageDialog(null, d.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
 		}
 	}
 

@@ -18,16 +18,15 @@ public class EncView extends JFrame {
 
 	private JRadioButton subCipherR;
 	private JRadioButton shiCipherR;
+	private JRadioButton kwdCipherR;
 	private ButtonGroup radioGroup;
 
-	private JTextField inputShift;
-	private JTextField inputSubst;
-	private JLabel shiftLabel;
-	private JLabel substLabel;
-	private JPanel inpShiftPanel;
-	private JPanel inpSubstPanel;
+	private JTextField changeInput;
+	private JLabel changeLabel;
+	private JPanel changePanel;
 	private JButton applyChangeB;
 	private JButton resetB;
+	private JPanel applyPanel;
 
 	private JTextField text;
 	private JTextField output;
@@ -45,41 +44,37 @@ public class EncView extends JFrame {
 
 		this.subCipherR = new JRadioButton("Substitution", true);
 		this.shiCipherR = new JRadioButton("Shift Cipher");
+		this.kwdCipherR = new JRadioButton("Keyword Cipher");
 		this.subCipherR.addActionListener(this.c);
 		this.subCipherR.addFocusListener(this.c);
 		this.shiCipherR.addActionListener(this.c);
 		this.shiCipherR.addFocusListener(this.c);
+		this.kwdCipherR.addActionListener(this.c);
+		this.kwdCipherR.addFocusListener(this.c);
 		this.radioGroup = new ButtonGroup();
 		this.radioGroup.add(this.subCipherR);
 		this.radioGroup.add(this.shiCipherR);
+		this.radioGroup.add(this.kwdCipherR);
 
 		this.selection = new JPanel();
 		this.selection.setBorder(BorderFactory.createTitledBorder("Encryption Method"));
 		this.selection.add(this.subCipherR);
 		this.selection.add(this.shiCipherR);
+		this.selection.add(this.kwdCipherR);
 		this.selection.setMaximumSize(new Dimension(this.getWidth(), 60));
 
 		this.changeAlphabetBox = new JPanel();
 		this.changeAlphabetBox.setBorder(BorderFactory.createTitledBorder("Alphabet Settings"));
 		this.changeAlphabetBox.setMaximumSize(new Dimension(this.getWidth(), 120));
-		this.changeAlphabetBox.setLayout(new GridLayout(3, 1));
+		this.changeAlphabetBox.setLayout(new GridLayout(2, 1));
 
-		this.substLabel = new JLabel("Substitution: ");
-		this.inputSubst = new JTextField();
+		this.changeLabel = new JLabel("Substitution: ");
+		this.changeInput = new JTextField();
 
-		this.inpSubstPanel = new JPanel();
-		this.inpSubstPanel.setLayout(new GridLayout(1, 2));
-		this.inpSubstPanel.add(this.substLabel);
-		this.inpSubstPanel.add(this.inputSubst);
-
-		this.shiftLabel = new JLabel("Shifting: ");
-		this.inputShift = new JTextField();
-		this.inputShift.setEditable(false);
-
-		this.inpShiftPanel = new JPanel();
-		this.inpShiftPanel.setLayout(new GridLayout(1, 2));
-		this.inpShiftPanel.add(this.shiftLabel);
-		this.inpShiftPanel.add(this.inputShift);
+		this.changePanel = new JPanel();
+		this.changePanel.setLayout(new GridLayout(1, 2));
+		this.changePanel.add(this.changeLabel);
+		this.changePanel.add(this.changeInput);
 
 		this.applyChangeB = new JButton("Apply");
 		this.applyChangeB.addActionListener(this.c);
@@ -87,15 +82,14 @@ public class EncView extends JFrame {
 		this.resetB = new JButton("Reset");
 		this.resetB.addActionListener(this.c);
 
-		JPanel applyPanel = new JPanel();
-		applyPanel.setLayout(new GridLayout(1, 4));
-		applyPanel.add(new Container());
-		applyPanel.add(this.applyChangeB);
-		applyPanel.add(this.resetB);
-		applyPanel.add(new Container());
+		this.applyPanel = new JPanel();
+		this.applyPanel.setLayout(new GridLayout(1, 4));
+		this.applyPanel.add(new Container());
+		this.applyPanel.add(this.applyChangeB);
+		this.applyPanel.add(this.resetB);
+		this.applyPanel.add(new Container());
 
-		this.changeAlphabetBox.add(this.inpSubstPanel);
-		this.changeAlphabetBox.add(this.inpShiftPanel);
+		this.changeAlphabetBox.add(this.changePanel);
 		this.changeAlphabetBox.add(applyPanel);
 
 		this.inputOutputBox = new JPanel();
@@ -135,20 +129,10 @@ public class EncView extends JFrame {
 	}
 
 	/**
-	 * Checks if Substitution is selected.
-	 * 
-	 * @return True if Substitution is selected, false otherwise.
-	 */
-	public boolean isSubstSelected() {
-		return (this.subCipherR.isSelected()) ? true : false;
-	}
-
-	/**
 	 * Checks if the component the user interacted with is the Substitution radio
 	 * button.
 	 * 
-	 * @param s
-	 *            Object taken by ActionEvent
+	 * @param s Object taken by ActionEvent
 	 * @return True if s is the Substitution radio button, false otherwise.
 	 */
 	public boolean isSubst(Object s) {
@@ -158,20 +142,10 @@ public class EncView extends JFrame {
 	}
 
 	/**
-	 * Checks if Shift Cipher is selected.
-	 * 
-	 * @return True if Shift Cipher is selected, false otherwise.
-	 */
-	public boolean isShiftSelected() {
-		return (this.shiCipherR.isSelected()) ? true : false;
-	}
-
-	/**
 	 * Checks if the component the user interacted with is the Shift Cipher radio
 	 * button.
 	 * 
-	 * @param s
-	 *            Object taken by ActionEvent
+	 * @param s Object taken by ActionEvent
 	 * @return True if s is the Shift Cipher radio button, false otherwise.
 	 */
 	public boolean isShift(Object s) {
@@ -181,21 +155,25 @@ public class EncView extends JFrame {
 	}
 
 	/**
-	 * Returns the input in the Substitution input field.
+	 * Checks if the component the user interacted with is the Keyword Cipher radio
+	 * button.
 	 * 
-	 * @return Input in the Substitution input field.
+	 * @param s Object taken by ActionEvent
+	 * @return True if s is the Keyword Cipher radio button, false otherwise.
 	 */
-	public String getSubstInp() {
-		return this.inputSubst.getText();
+	public boolean isKeyword(Object s) {
+		if (s == this.kwdCipherR)
+			return true;
+		return false;
 	}
 
 	/**
-	 * Returns the input in the Shifting input field.
+	 * Returns the input in the change input field.
 	 * 
-	 * @return Input in the Shifting input field.
+	 * @return Input in the change input field.
 	 */
-	public String getShiftInp() {
-		return this.inputShift.getText();
+	public String getChangeInp() {
+		return this.changeInput.getText();
 	}
 
 	/**
@@ -217,8 +195,7 @@ public class EncView extends JFrame {
 	/**
 	 * Checks if the specified Object s is the button for applying changes.
 	 * 
-	 * @param s
-	 *            Object taken by ActionEvent
+	 * @param s Object taken by ActionEvent
 	 * @return True if s is the button for changing the alphabet, false otherwise.
 	 */
 	public boolean isApplyChange(Object s) {
@@ -230,8 +207,7 @@ public class EncView extends JFrame {
 	/**
 	 * Checks if the specified Object s is the button for resetting changes.
 	 * 
-	 * @param s
-	 *            Object taken by ActionEvent
+	 * @param s Object taken by ActionEvent
 	 * @return True if s is the button for resetting all alphabets, false otherwise.
 	 */
 	public boolean isReset(Object s) {
@@ -243,8 +219,7 @@ public class EncView extends JFrame {
 	/**
 	 * Checks if the specified Object s is the button for encrypting input.
 	 * 
-	 * @param s
-	 *            Object taken by ActionEvent
+	 * @param s Object taken by ActionEvent
 	 * @return True if s is the button for encrypting, false otherwise.
 	 */
 	public boolean isEncrypt(Object s) {
@@ -256,8 +231,7 @@ public class EncView extends JFrame {
 	/**
 	 * Checks if the specified Object s is the button for decrypting input.
 	 * 
-	 * @param s
-	 *            Object taken by ActionEvent
+	 * @param s Object taken by ActionEvent
 	 * @return True if s is the button for decrypting, false otherwise.
 	 */
 	public boolean isDecrypt(Object s) {
@@ -269,18 +243,22 @@ public class EncView extends JFrame {
 	/**
 	 * This method changes the layout to fit the cipher method that was chosen.
 	 * 
-	 * @param mode
-	 *            The current chosen cipher method
+	 * @param mode The current chosen cipher method
 	 */
 	public void setChangeLayout(int mode) {
-		if (mode == EncModel.MODE_SUBST) {
-			this.inputSubst.setEditable(true);
-			this.inputShift.setEditable(false);
+		switch (mode) {
+		case EncModel.MODE_SUBST:
+			this.changeLabel.setText("Substitution");
 			this.m.setMode(EncModel.MODE_SUBST);
-		} else {
-			this.inputSubst.setEditable(false);
-			this.inputShift.setEditable(true);
+			break;
+		case EncModel.MODE_SHIFT:
+			this.changeLabel.setText("Shifting");
 			this.m.setMode(EncModel.MODE_SHIFT);
+			break;
+		case EncModel.MODE_KWORD:
+			this.changeLabel.setText("Keyword");
+			this.m.setMode(EncModel.MODE_KWORD);
+			break;
 		}
 	}
 }

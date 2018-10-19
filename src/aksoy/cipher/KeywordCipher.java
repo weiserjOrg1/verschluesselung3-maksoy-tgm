@@ -2,11 +2,13 @@ package aksoy.cipher;
 
 public class KeywordCipher extends MonoAlphabeticCipher {
 
-	public KeywordCipher(String keyword) throws CipherException {
+	public KeywordCipher(String keyword) throws CipherException, NoKeywordException {
 		this.setKeyword(keyword);
 	}
 
-	public void setKeyword(String keyword) throws CipherException {
+	public void setKeyword(String keyword) throws CipherException, NoKeywordException {
+		if (keyword.length() == 0)
+			throw new NoKeywordException();
 		keyword = keyword.toLowerCase();
 		String newAlph = "";
 		for (int i = 0; i < keyword.length(); i++) {
