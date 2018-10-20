@@ -26,8 +26,7 @@ public class MonoAlphabeticCipher implements Cipher {
 	 * @throws CipherException The Exception that is thrown when an issue is found
 	 *                         in the input.
 	 */
-	protected void setSecretAlphabet(String secretAlphabet)
-			throws CipherException {
+	protected void setSecretAlphabet(String secretAlphabet) throws CipherException {
 		if (secretAlphabet.length() != 30) {
 			throw new CipherLengthException();
 		}

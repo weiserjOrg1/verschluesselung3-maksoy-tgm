@@ -1,5 +1,13 @@
 package aksoy.cipher;
 
+/**
+ * The class TranspositionCipher implements Cipher's methods. The class encrypts
+ * input using transposition. The user can change the amount of rows for the
+ * transposition. Minimum two rows allowed.
+ * 
+ * @author Melih Aksoy
+ * @version 20-10-2018
+ */
 public class TranspositionCipher implements Cipher {
 	private int transpositionLevel;
 
@@ -12,10 +20,15 @@ public class TranspositionCipher implements Cipher {
 			this.transpositionLevel = transpositionLevel;
 	}
 
+	/**
+	 * This method encrypts the input according to the transposition level set.
+	 * 
+	 * @param text Input to be encrypted.
+	 */
 	public String encrypt(String text) {
 		text = text.toLowerCase();
 		String filteredText = "";
-		for (int i = 0; i < text.length(); i++) {
+		for (int i = 0; i < text.length(); i++) { // Filter out anything not a letter
 			char currentLetter = text.charAt(i);
 			switch (currentLetter) {
 			case 'ä':
@@ -29,6 +42,11 @@ public class TranspositionCipher implements Cipher {
 					filteredText += currentLetter;
 			}
 		}
+		/*Create 2D-array that saves converted input. Example: "hallowelt", level 2:
+		 * array[0]:h   o   t
+		 * array[1]: a l w l
+		 * array[2]:  l   e
+		 */
 		String output = "";
 		char[][] array = new char[this.transpositionLevel + 1][filteredText.length()];
 		boolean up = false;
@@ -44,6 +62,7 @@ public class TranspositionCipher implements Cipher {
 			if (k == 0)
 				up = false;
 		}
+		// Extract the row arrays and create output string out of the rows.
 		int used = 0;
 		for (int i = 0; i < array.length; i++) {
 			for (int j = 0; j < array[i].length; j++) {
@@ -66,7 +85,8 @@ public class TranspositionCipher implements Cipher {
 			return text;
 		String[] pieces = new String[this.transpositionLevel + 1];
 		int spaceAmount = 0;
-		for (int i = 0; i < text.length(); i++) { // Check if structure fits to level
+		// Check if structure fits to level
+		for (int i = 0; i < text.length(); i++) {
 			if (text.charAt(i) == ' ')
 				spaceAmount++;
 			if (i == text.length() - 1 && spaceAmount != this.transpositionLevel)
@@ -74,8 +94,8 @@ public class TranspositionCipher implements Cipher {
 		}
 		int lastSpaceIndex = 0;
 		int longestPiece = 0;
+		// 1: Separate input into pieces, 2: Get length of longest piece
 		for (int i = 0; i < this.transpositionLevel + 1; i++) {
-			// 1: Separate input into pieces, 2: Get length of longest piece
 			if (i != this.transpositionLevel) {
 				pieces[i] = text.substring(lastSpaceIndex, text.indexOf(' ', lastSpaceIndex));
 				if (pieces[i].length() > longestPiece)
@@ -88,11 +108,13 @@ public class TranspositionCipher implements Cipher {
 			lastSpaceIndex = text.indexOf(' ', lastSpaceIndex) + 1;
 		}
 		int pieceLengthTotal = 0;
-		for (int i = 0; i < pieces.length; i++) { // Length of all pieces together
+		// Length of all pieces together
+		for (int i = 0; i < pieces.length; i++) {
 			pieceLengthTotal += pieces[i].length();
 		}
 		String output = "";
 		int firstPieceIndex = 0, lastPieceIndex = 0, lettersUsed = 0;
+		// Read the pieces and put together the decrypted text with the characters.
 		if (this.transpositionLevel > 1) {
 			xyz: for (int i = 0; i < longestPiece; i++) {
 				if (i % 2 == 0) {

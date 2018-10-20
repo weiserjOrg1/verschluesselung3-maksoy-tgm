@@ -23,6 +23,12 @@ public class EncModel {
 		this.cipher = new MonoAlphabeticCipher();
 	}
 
+	/**
+	 * The method change changes the chosen method of encryption to the one
+	 * specified in the parameter.
+	 * 
+	 * @param input The desired encryption decryption mode.
+	 */
 	public void change(String input) {
 		try {
 			switch (this.selectedMethod) {
@@ -57,11 +63,11 @@ public class EncModel {
 	}
 
 	public String encrypt(String input) {
-		return (this.selectedMethod!=MODE_TRANS)?this.cipher.encrypt(input):this.tcipher.encrypt(input);
+		return (this.selectedMethod != MODE_TRANS) ? this.cipher.encrypt(input) : this.tcipher.encrypt(input);
 	}
 
 	public String decrypt(String output) {
-		return (this.selectedMethod!=MODE_TRANS)?this.cipher.decrypt(output):this.tcipher.decrypt(output);
+		return (this.selectedMethod != MODE_TRANS) ? this.cipher.decrypt(output) : this.tcipher.decrypt(output);
 	}
 
 	public int getMode() {
@@ -69,9 +75,9 @@ public class EncModel {
 	}
 
 	public void setMode(int mode) {
-		if (mode!=MODE_TRANS) {
+		if (mode != MODE_TRANS) {
 			this.cipher = new MonoAlphabeticCipher();
-		}else {
+		} else {
 			this.tcipher = new TranspositionCipher(1);
 		}
 		this.selectedMethod = mode;
