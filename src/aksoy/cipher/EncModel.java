@@ -57,11 +57,11 @@ public class EncModel {
 	}
 
 	public String encrypt(String input) {
-		return this.cipher.encrypt(input);
+		return (this.selectedMethod!=MODE_TRANS)?this.cipher.encrypt(input):this.tcipher.encrypt(input);
 	}
 
 	public String decrypt(String output) {
-		return this.cipher.decrypt(output);
+		return (this.selectedMethod!=MODE_TRANS)?this.cipher.decrypt(output):this.tcipher.decrypt(output);
 	}
 
 	public int getMode() {
@@ -69,7 +69,11 @@ public class EncModel {
 	}
 
 	public void setMode(int mode) {
-		this.cipher = new MonoAlphabeticCipher();
+		if (mode!=MODE_TRANS) {
+			this.cipher = new MonoAlphabeticCipher();
+		}else {
+			this.tcipher = new TranspositionCipher(1);
+		}
 		this.selectedMethod = mode;
 	}
 }

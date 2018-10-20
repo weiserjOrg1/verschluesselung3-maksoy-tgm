@@ -35,6 +35,8 @@ public class EncController implements ActionListener, FocusListener {
 			this.view.setChangeLayout(EncModel.MODE_SHIFT);
 		} else if (this.view.isKeyword(e.getSource())) {
 			this.view.setChangeLayout(EncModel.MODE_KWORD);
+		} else if (this.view.isTrans(e.getSource())) {
+			this.view.setChangeLayout(EncModel.MODE_TRANS);
 		}
 	}
 
@@ -45,6 +47,8 @@ public class EncController implements ActionListener, FocusListener {
 			this.view.setChangeLayout(EncModel.MODE_SHIFT);
 		} else if (this.view.isKeyword(e.getSource())) {
 			this.view.setChangeLayout(EncModel.MODE_KWORD);
+		} else if (this.view.isTrans(e.getSource())) {
+			this.view.setChangeLayout(EncModel.MODE_TRANS);
 		}
 	}
 
