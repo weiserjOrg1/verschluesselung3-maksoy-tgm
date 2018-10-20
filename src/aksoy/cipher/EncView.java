@@ -19,6 +19,7 @@ public class EncView extends JFrame {
 	private JRadioButton subCipherR;
 	private JRadioButton shiCipherR;
 	private JRadioButton kwdCipherR;
+	private JRadioButton trpCipherR;
 	private ButtonGroup radioGroup;
 
 	private JTextField changeInput;
@@ -43,24 +44,29 @@ public class EncView extends JFrame {
 		this.setLayout(new BoxLayout(this.getContentPane(), BoxLayout.Y_AXIS));
 
 		this.subCipherR = new JRadioButton("Substitution", true);
-		this.shiCipherR = new JRadioButton("Shift Cipher");
-		this.kwdCipherR = new JRadioButton("Keyword Cipher");
+		this.shiCipherR = new JRadioButton("Shift");
+		this.kwdCipherR = new JRadioButton("Keyword");
+		this.trpCipherR = new JRadioButton("Transpos");
 		this.subCipherR.addActionListener(this.c);
 		this.subCipherR.addFocusListener(this.c);
 		this.shiCipherR.addActionListener(this.c);
 		this.shiCipherR.addFocusListener(this.c);
 		this.kwdCipherR.addActionListener(this.c);
 		this.kwdCipherR.addFocusListener(this.c);
+		this.trpCipherR.addActionListener(this.c);
+		this.trpCipherR.addFocusListener(this.c);
 		this.radioGroup = new ButtonGroup();
 		this.radioGroup.add(this.subCipherR);
 		this.radioGroup.add(this.shiCipherR);
 		this.radioGroup.add(this.kwdCipherR);
+		this.radioGroup.add(this.trpCipherR);
 
 		this.selection = new JPanel();
 		this.selection.setBorder(BorderFactory.createTitledBorder("Encryption Method"));
 		this.selection.add(this.subCipherR);
 		this.selection.add(this.shiCipherR);
 		this.selection.add(this.kwdCipherR);
+		this.selection.add(this.trpCipherR);
 		this.selection.setMaximumSize(new Dimension(this.getWidth(), 60));
 
 		this.changeAlphabetBox = new JPanel();
@@ -168,6 +174,19 @@ public class EncView extends JFrame {
 	}
 
 	/**
+	 * Checks if the component the user interacted with is the Transposition radio
+	 * button.
+	 * 
+	 * @param s Object taken by ActionEvent
+	 * @return True if s is the Keyword Cipher radio button, false otherwise.
+	 */
+	public boolean isTrans(Object s) {
+		if (s == this.trpCipherR)
+			return true;
+		return false;
+	}
+
+	/**
 	 * Returns the input in the change input field.
 	 * 
 	 * @return Input in the change input field.
@@ -259,6 +278,9 @@ public class EncView extends JFrame {
 			this.changeLabel.setText("Keyword");
 			this.m.setMode(EncModel.MODE_KWORD);
 			break;
+		case EncModel.MODE_TRANS:
+			this.changeLabel.setText("Transposition Level");
+			this.m.setMode(EncModel.MODE_TRANS);
 		}
 	}
 }
