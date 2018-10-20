@@ -13,6 +13,7 @@ public class TranspositionCipher implements Cipher {
 	}
 
 	public String encrypt(String text) {
+		text = text.toLowerCase();
 		String filteredText = "";
 		for (int i = 0; i < text.length(); i++) {
 			char currentLetter = text.charAt(i);
@@ -60,6 +61,7 @@ public class TranspositionCipher implements Cipher {
 	}
 
 	public String decrypt(String text) {
+		text = text.toLowerCase();
 		if (text.indexOf(' ') == -1)
 			return text;
 		String[] pieces = new String[this.transpositionLevel + 1];
