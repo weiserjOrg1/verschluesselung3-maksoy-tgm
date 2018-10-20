@@ -40,6 +40,9 @@ public class EncController implements ActionListener, FocusListener {
 		}
 	}
 
+	/**
+	 * focusGained handles all input requests captured by the FocusListener.
+	 */
 	public void focusGained(FocusEvent e) {
 		if (this.view.isSubst(e.getSource())) {
 			this.view.setChangeLayout(EncModel.MODE_SUBST);

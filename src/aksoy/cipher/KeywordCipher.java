@@ -1,11 +1,28 @@
 package aksoy.cipher;
 
+/**
+ * Uses the class MonoAlphabeticCipher's basic functionality to encrypt and
+ * decrypt text. Changes alphabet based on the secret keyword that is put in.
+ * 
+ * @author Melih Aksoy
+ * @version 20-10-2018
+ */
 public class KeywordCipher extends MonoAlphabeticCipher {
 
 	public KeywordCipher(String keyword) throws CipherException, NoKeywordException {
 		this.setKeyword(keyword);
 	}
 
+	/**
+	 * This method changes the input keyword to fit in to the alphabet. Once all
+	 * unneeded and duplicate characters are removed, the rest of the alphabet is
+	 * added to the keyword.
+	 * 
+	 * @param keyword Keyword for use in the alphabet
+	 * @throws CipherException    Thrown when alphabet does not satisfy
+	 *                            requirements.
+	 * @throws NoKeywordException Thrown when no keyword is given.
+	 */
 	public void setKeyword(String keyword) throws CipherException, NoKeywordException {
 		if (keyword.length() == 0)
 			throw new NoKeywordException();

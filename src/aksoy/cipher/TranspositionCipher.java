@@ -4,23 +4,15 @@ public class TranspositionCipher implements Cipher {
 	private int transpositionLevel;
 
 	public TranspositionCipher(int transpositionLevel) {
-		if (transpositionLevel >= 1) {
-			this.transpositionLevel = transpositionLevel;
-		} else {
-			this.transpositionLevel = 1;
-		}
+		this.transpositionLevel = transpositionLevel;
 	}
 
-	public void setTranspositionLevel(int transpositionLevel) throws TPException {
-		if (transpositionLevel >= 1) {
+	public void setTranspositionLevel(int transpositionLevel) {
+		if (transpositionLevel >= 1)
 			this.transpositionLevel = transpositionLevel;
-		} else {
-			throw new TPException();
-		}
 	}
 
 	public String encrypt(String text) {
-		text = text.toLowerCase();
 		String filteredText = "";
 		for (int i = 0; i < text.length(); i++) {
 			char currentLetter = text.charAt(i);
@@ -67,8 +59,7 @@ public class TranspositionCipher implements Cipher {
 		return output;
 	}
 
-	public String decrypt(String text){
-		text = text.toLowerCase();
+	public String decrypt(String text) {
 		if (text.indexOf(' ') == -1)
 			return text;
 		String[] pieces = new String[this.transpositionLevel + 1];
@@ -122,7 +113,7 @@ public class TranspositionCipher implements Cipher {
 					}
 				} else {
 					for (int j = pieces.length - 2; j > -1; j--) {
-						if (j == 0 && !(pieces[j].length() < (i + 1))) {
+						if (j == 0) {
 							output += pieces[j].charAt(firstPieceIndex);
 							firstPieceIndex++;
 							lettersUsed++;
